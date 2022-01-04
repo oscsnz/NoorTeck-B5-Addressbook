@@ -3,6 +3,7 @@ package com.noorteck.qa.utils;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -29,9 +30,9 @@ public class CommonUI extends Constants {
 	 * 
 	 * @param browser
 	 */
-	public void openBrowser(String browser) {
+	public static void openBrowser(String browser) {
 		try {
-
+ 
 			switch (browser.toLowerCase()) {
 
 			case "chrome":
@@ -62,7 +63,7 @@ public class CommonUI extends Constants {
 	 * 
 	 * @param url
 	 */
-	public void navigate(String url) {
+	public static void navigate(String url) {
 
 		try {
 			driver.manage().window().maximize();
@@ -83,7 +84,7 @@ public class CommonUI extends Constants {
 	 * @return
 	 */
 
-	public String getTitle() {
+	public static String getTitle() {
 		try {
 			return driver.getTitle();
 		} catch (Exception e) {
@@ -101,7 +102,7 @@ public class CommonUI extends Constants {
 	 * @param element
 	 * @return
 	 */
-	public boolean isDisplayed(WebElement element) {
+	public static boolean isDisplayed(WebElement element) {
 		try {
 
 			return element.isDisplayed();
@@ -122,7 +123,7 @@ public class CommonUI extends Constants {
 	 * @param element
 	 * @return
 	 */
-	public boolean isEnabled(WebElement element) {
+	public static boolean isEnabled(WebElement element) {
 		try {
 
 			return element.isEnabled();
@@ -143,7 +144,7 @@ public class CommonUI extends Constants {
 	 * @return
 	 */
 
-	public boolean isSelected(WebElement element) {
+	public static boolean isSelected(WebElement element) {
 		try {
 
 			return element.isSelected();
@@ -161,8 +162,12 @@ public class CommonUI extends Constants {
 	 * 
 	 * @param element
 	 */
+	public static void clickHiddenElement(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].click", element);
+	}
 
-	public void click(WebElement element) {
+	public static void click(WebElement element) {
 
 		if (isDisplayed(element)) {
 			element.click();
@@ -175,7 +180,7 @@ public class CommonUI extends Constants {
 	 * @param element
 	 * @return
 	 */
-	public String getText(WebElement element) {
+	public static String getText(WebElement element) {
 		String text = null;
 
 		if (isDisplayed(element)) {
@@ -189,11 +194,23 @@ public class CommonUI extends Constants {
 	 * This method quits the browser
 	 */
 
-	public void quitBrowser() {
+	public static void quitBrowser() {
 
 		try {
 
 			driver.quit();
+
+		} catch (Exception e) {
+			System.out.println("Driver object is null");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void closeBrowser() {
+
+		try {
+
+			driver.close();
 
 		} catch (Exception e) {
 			System.out.println("Driver object is null");
@@ -208,7 +225,7 @@ public class CommonUI extends Constants {
 	 * @param value
 	 */
 
-	public void enter(WebElement element, String value) {
+	public static void enter(WebElement element, String value) {
 
 		if (isDisplayed(element)) {
 			element.clear();
@@ -224,13 +241,14 @@ public class CommonUI extends Constants {
 	 * @param indexTextValue
 	 */
 
-	public void selectFromDropdown(WebElement element, String methodName, String indexTextValue) {
+	public static void selectFromDropdown(WebElement element, String methodName, String indexTextValue) {
 
 		try {
 
 			Select obj = new Select(element);
 			methodName = methodName.toLowerCase();
-
+			
+			
 			if (methodName.contains("index")) {
 				int index = Integer.parseInt(indexTextValue);
 				obj.selectByIndex(index);
@@ -255,7 +273,7 @@ public class CommonUI extends Constants {
 	 * @return
 	 */
 
-	public boolean isAlertPresent() {
+	public static boolean isAlertPresent() {
 		boolean isAlert = false;
 
 		try {
@@ -274,7 +292,7 @@ public class CommonUI extends Constants {
 	 * This method switchs to alert and accepts
 	 */
 
-	public void acceptAlert() {
+	public static void acceptAlert() {
 
 		if (isAlertPresent()) {
 			Alert alert = driver.switchTo().alert();
@@ -287,7 +305,7 @@ public class CommonUI extends Constants {
 	 * This method switchs to alert and declines
 	 */
 
-	public void dismissAlert() {
+	public static void dismissAlert() {
 
 		if (isAlertPresent()) {
 			Alert alert = driver.switchTo().alert();
@@ -302,7 +320,7 @@ public class CommonUI extends Constants {
 	 * @param target
 	 */
 
-	public void dragAndDrop(WebElement source, WebElement target) {
+	public static void dragAndDrop(WebElement source, WebElement target) {
 
 		try {
 			Actions actions = new Actions(driver);
@@ -320,7 +338,7 @@ public class CommonUI extends Constants {
 	 * @param element
 	 */
 
-	public void moveToElement(WebElement element) {
+	public static void moveToElement(WebElement element) {
 		try {
 			Actions actions = new Actions(driver);
 			actions.moveToElement(element).build().perform();
@@ -337,7 +355,7 @@ public class CommonUI extends Constants {
 	 * @param element
 	 */
 
-	public void moveToElementAndClick(WebElement element) {
+	public static void moveToElementAndClick(WebElement element) {
 		try {
 			Actions actions = new Actions(driver);
 			actions.moveToElement(element).click().build().perform();
@@ -347,5 +365,79 @@ public class CommonUI extends Constants {
 		}
 	}
 
+	public static void openBrowserOLD(String browser) {
+
+		String key = null;
+		String path = null;
+
+		try {
+
+			switch (browser.toLowerCase()) {
+
+			case "chrome":
+				key = "webdriver.chrome.driver";
+				path = "C:\\Users\\NoorTeck\\OneDrive - glbtechexperts.com\\Desktop\\Selenium\\chromedriver.exe";
+				System.setProperty(key, path);
+				driver = new ChromeDriver();
+				break;
+			case "firefox":
+				key = "webdriver.gecko.driver";
+				path = "C:\\Users\\NoorTeck\\OneDrive - glbtechexperts.com\\Desktop\\Selenium\\geckodriver.exe";
+				System.setProperty(key, path);
+				driver = new FirefoxDriver();
+				break;
+			case "ie":
+				key = "webdriver.ie.driver";
+				path = "C:\\Users\\NoorTeck\\OneDrive - glbtechexperts.com\\Desktop\\Selenium\\iedriver.exe";
+				System.setProperty(key, path);
+				driver = new InternetExplorerDriver();
+				break;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Browser has [" + browser + "] value. Make sure to pass [chrome/ie/firefox]");
+			e.printStackTrace();
+
+		}
+	}
 
 }
+
+/**
+ * chrome Firefox IE Edge Safari
+ * 
+ * 
+ * 
+ * 
+ * opening browser
+ * 
+ * maximizing window
+ * 
+ * 
+ * implicitly wait
+ * 
+ * 
+ * 
+ * quitting browser
+ * 
+ * 
+ * Click
+ * 
+ * 
+ * entering values
+ * 
+ * ifrmaes
+ * 
+ * 
+ * popup
+ * 
+ * dropdowns
+ * 
+ * 
+ * getText()
+ * 
+ * getTitle()
+ * 
+ * 
+ * 
+ */
