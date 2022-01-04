@@ -1,7 +1,7 @@
 package com.noorteck.qa.test;
 
 
-import org.testng.annotations.Test;
+
 
 import org.testng.asserts.SoftAssert;
 
@@ -19,25 +19,25 @@ public class AddressBookTest extends ObjInitialize {
 		CommonUI.openBrowser("chrome");
 		CommonUI.navigate(url);
 		initializeClassObj();
-		
-		
 		testCaseOne();
+		CommonUI.quitBrowser();
+		//---------------------------//
 		
-				
+		url = "http://a.testaddressbook.com/sign_in";
 		CommonUI.openBrowser("chrome");
-		CommonUI.navigate("http://a.testaddressbook.com/sign_in");
+		CommonUI.navigate(url);
+		initializeClassObj();
 		testCaseTwo();
-		
 		
 		
 		CommonUI.quitBrowser();
 	}
 	
-	@Test
+	
 	public static void testCaseOne() {
 		
 		SoftAssert softAssert = new SoftAssert();
-		signUpPage.enterEmail("afjadnio@gmail.com");
+		signUpPage.enterEmail("eqweq@gmail.com");
 		signUpPage.enterPassword("puraTH");
 		signUpPage.clickSignUp();
 		
@@ -48,7 +48,7 @@ public class AddressBookTest extends ObjInitialize {
 		
 		softAssert.assertAll();
 	}
-	@Test
+	
 	public static void testCaseTwo() {
 		
 		
