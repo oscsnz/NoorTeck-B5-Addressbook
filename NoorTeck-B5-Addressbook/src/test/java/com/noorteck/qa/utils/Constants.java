@@ -2,6 +2,11 @@ package com.noorteck.qa.utils;
 
 import org.openqa.selenium.WebDriver;
 
+import com.noorteck.qa.pages.HomePage;
+import com.noorteck.qa.pages.SignInPage;
+import com.noorteck.qa.pages.SignUpPage;
+
+
 /**
  * In this class we declare our objects that will be shared among different classes
  * @author NoorTeck
@@ -10,8 +15,12 @@ import org.openqa.selenium.WebDriver;
 public class Constants {
 	
 	
-	public WebDriver driver;
+	public static WebDriver driver;
 	
 	//declare class objects and common objects
-
+	
+	public static HomePage homePageObj;
+	public static SignInPage signInPage;
+	public static SignUpPage signUpPage;
+	
 }
